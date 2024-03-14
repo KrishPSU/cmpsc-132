@@ -120,23 +120,24 @@ class SortedLinkedList:
         Traceback (most recent call last):
         TypeError: SortedLinkedList.add() missing 1 required positional argument: 'value'
         """
-        
-        if (self.head == None):
-            self.head = value
-            self.tail = value
+
+        newNode = Node(value)
+        if (self.isEmpty()):
+            self.head = newNode
+            self.tail = newNode
+            return self
         else:
-            temp = self.head
+            temp = self.tail
             while temp:
-                if (temp.value < value and temp.next.value > value):
-                    prevNextNode = temp.next
-                    newNode = Node(value)
+                if (temp.value <= value):
+                    nextNode = temp.next
                     temp.next = newNode
-                    newNode.prev = temp
-                    newNode.next = prevNextNode
-                    prevNextNode.prev = newNode
-                temp=temp.next
-        
-        return self
+                    newNode.next = nextNode
+            
+            return self
+                
+
+
 
 
     
@@ -184,10 +185,23 @@ class SortedLinkedList:
         Tail:Node(5)
         List:1 -> 4 -> 5
         """
-        #
-        # YOUR CODE HERE
-        #
-        pass
+
+        if (self.isEmpty()):
+            return self
+        elif (len(self) == 1):
+            self.head = None
+            self.tail = None
+            return self
+        else:
+            temp = self.head
+            prevNode = None
+            while temp is not None:
+                if (temp.value == value):
+                    prevNode = temp
+                    temp = temp.next
+                    prevNode.next = temp
+                    return self
+                temp = temp.next
 
     
 
@@ -227,10 +241,39 @@ class SortedLinkedList:
         Tail:Node(4.5)
         List:-5 -> 0 -> 1 -> 2 -> 3 -> 4.5
         """
-        #
-        # YOUR CODE HERE
-        #
-        pass
+        
+        temp = self.head
+        newList = SortedLinkedList()
+
+
+        def double_duplicate(val):
+                newList.add(val).add(val)
+
+        def single_duplicate(val):
+            newList.add(val)
+
+
+        if (temp == None):
+            return self
+        
+
+        while (temp):
+            count = temp.value
+            if (temp.value % 1 == 0):
+                while (count > 0):
+                    single_duplicate(temp.value)
+                    count -= 1
+            elif (temp.value % 1 != 0):
+                double_duplicate(temp.value)
+            elif (temp.value == 0):
+                single_duplicate(temp.value)
+            elif (temp.value < 0):
+                double_duplicate(temp.value)
+
+            temp = temp.next
+
+        return newList
+
 
             
 
@@ -258,11 +301,24 @@ class SortedLinkedList:
         Head:Node(1)
         Tail:Node(5)
         List:1 -> 2 -> 3 -> 4 -> 5
-        """
-        #
-        # YOUR CODE HERE
-        #
-        pass
+        """  
+
+
+
+
+
+        if (self.isEmpty()):
+            return
+        else:
+            temp = self.head
+            while temp:
+                if (temp == temp.next):
+                    self.remove(temp.next)
+                    temp = temp.next
+            return self
+                
+
+
 
 
 
@@ -272,8 +328,8 @@ if __name__ == '__main__':
     
     ## Uncomment this line if you want to run doctest by function.
     ## Replace isEmpty with the name of the function you want to run
-    doctest.run_docstring_examples(SortedLinkedList.add, globals(), verbose=True, name='hw4')
+    # doctest.run_docstring_examples(SortedLinkedList.removeDuplicates, globals(), verbose=True, name='hw4')
 
     ## Uncomment this line if you want to run the docstring
     ## in all functions
-    # doctest.testmod()
+    doctest.testmod(verbose=True)
