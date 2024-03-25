@@ -245,10 +245,28 @@ class Calculator:
         >>> x = Calculator(); x._validate('25 +')
         False
         """
+
+        equation = []
+
+        expr = expr.strip() + " "
+        expretion = ""
+        for char in range(len(expr)):
+            expretion += str(expr[char]).strip()
+            if (expr[char] == " "):
+                equation.append(expretion)
+                expretion = ""
+
         
-        # expr = expr.strip()
-        # for char in range(len(expr)):
-        #     if (Calculator._isNumber(char) == False):
+        for i in range(len(equation)):
+            if (i == '*'):
+                # MULTIPLY
+
+            elif (i == '+'):
+                # ADD
+            elif (i == '^'):
+                # POWER
+        
+        return equation
 
 
 
@@ -337,7 +355,7 @@ if __name__ == '__main__':
     
     ## Uncomment this line if you want to run doctest by function.
     ## Replace get_words with the name of the function you want to run
-    doctest.run_docstring_examples(Calculator._isNumber, globals(), verbose=True, name='hw5')
+    doctest.run_docstring_examples(Calculator._validate, globals(), verbose=True, name='hw5')
 
     ## Uncomment this line if you want to run the docstring
     ## in all functions
@@ -358,4 +376,3 @@ if __name__ == '__main__':
 
 
     
-
